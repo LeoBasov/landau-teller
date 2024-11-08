@@ -1,5 +1,5 @@
 import json
-from gas import Gas, Vibmode
+from .gas import Gas, Vibmode
 
 def read_species(file_name):
     gas = Gas()
@@ -34,9 +34,3 @@ def read_species(file_name):
             gas.vibmodes.append(vibmode)
 
     return gas
-
-if __name__ == '__main__':
-    file_name = "data/CO2.json"
-    co2 = read_species(file_name)
-
-    print("done")
