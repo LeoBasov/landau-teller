@@ -12,3 +12,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Changelog.
+- gas module.
+- reader module.
+- File structure for unit tests.
+- CO2 data in json format.
+- setup.py file.
