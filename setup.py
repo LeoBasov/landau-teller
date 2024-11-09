@@ -8,5 +8,6 @@ setup(
 	packages=['landau_teller'], 
 	install_requires=[ 
 		'numpy',
+		'scipy',
 	], 
 ) 
