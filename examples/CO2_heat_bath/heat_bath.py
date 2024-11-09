@@ -11,9 +11,7 @@ nrho = 2e22
 t = np.linspace(0, 1e-5, 100)
 
 co2.Zrot = 10
-
-for vibmode in co2.vibmodes:
-    vibmode.Z = 50
+co2.Zvib = 50
 
 sol = lt.solve(co2, nrho, temp, trot, tvib, t)
 
