@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.0] - 2024-11-09
+
+### Added
+
+- Switch to turn on and off relaxation of individual modes.
+- setter for Zvib.
+
 ## [0.3.0] - 2024-11-09
 
 ### Added
