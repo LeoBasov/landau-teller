@@ -17,9 +17,6 @@ for vibmode in co2.vibmodes:
 
 sol = lt.solve(co2, nrho, temp, trot, tvib, t)
 
-#plt.plot(sol.time, sol.energies)
-#plt.show()
-
 plt.plot(sol.time, sol.temperatures)
 plt.show()
 
