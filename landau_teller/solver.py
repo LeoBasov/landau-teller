@@ -87,7 +87,14 @@ def solve(gas, nrho, temp, trot, tvib, t):
     evib0 = calc_evib(gas, tvib)
     etot = ekin0 + erot0 + sum(evib0)
     y0 = np.concatenate(([erot0], evib0))
-    sol = odeint(calc_dedt, y0, t, args=(gas, etot, nrho))
+    sol = [y0]
+
+    for _ in range(len(t) - 1):
+        dedt = calc_dedt(sol[-1], t, gas, etot, nrho)
+        res = sol[-1] + dedt*t[1]
+        sol.append(res)
+
+    sol = np.array(sol)
     solution = Solution()
 
     solution.energies = calc_energies(sol, etot)
