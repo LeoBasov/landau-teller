@@ -15,9 +15,10 @@ N2.Zrot = 10
 for vibmode in N2.vibmodes:
     vibmode.Z = 25
 
-sol = lt.solve(N2, nrho, temp, trot, tvib, t)
+sol = lt.solve(N2, nrho, temp, trot, tvib, t, vibrelax=False)
 
-plt.plot(sol.time, sol.temperatures)
+plt.plot(sol.time, sol.temperatures[:,0])
+plt.plot(sol.time, sol.temperatures[:,1])
 plt.show()
 
 lt.write_solution(sol, "N2", "csv")
