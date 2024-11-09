@@ -1,6 +1,7 @@
 import numpy as np
 from numbers import Number
 from scipy.integrate import odeint
+from scipy.optimize import fsolve
 from .constants import kb
 
 class Solution:
@@ -61,12 +62,22 @@ def calc_energies(sol, etot):
 
     return energies
 
+def eqn2solve(temps, evibs, gas):
+    return calc_evib(gas, temps) - evibs
+
 def calc_temperatures(energies, gas):
     temperatures = np.zeros(energies.shape)
 
     for i in range(len(energies)):
         temperatures[i][0] = energies[i][0] / (1.5 * kb)
         temperatures[i][1] = energies[i][1] / (0.5 * gas.dof_rot* kb)
+
+        evibs = np.array([energies[i][k] for k in range(2, energies.shape[1])])
+        guess = np.ones(evibs.size)*300.0
+        vibtemps = fsolve(eqn2solve, guess, args=(evibs, gas))
+
+        for k in range(vibtemps.size):
+            temperatures[i][k + 2] = vibtemps[k]
 
     return temperatures
 
