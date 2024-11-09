@@ -39,3 +39,5 @@ class Gas:
         elif len(value) == len(self.vibmodes):
             for i in range(len(value)):
                 self.vibmodes[i].Z = value[i]
+        else:
+            raise Exception("wrongly formated Zvib")
