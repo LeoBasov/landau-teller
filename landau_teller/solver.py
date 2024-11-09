@@ -34,12 +34,12 @@ def calc_evib(gas, temp):
 
     return evib
 
-def calc_dedt(y, t, gas, etot, nrho):
+def calc_dedt(y, t, gas, etot, nrho, rotrelax, vibrelax):
     ekin = etot - sum(y)
     temp = ekin / (1.5 * kb)
     nu = calc_coll_freq(gas, nrho, temp)
-    erot_eq = calc_erot(gas, temp)
-    evib_eq = calc_evib(gas, temp)
+    erot_eq = calc_erot(gas, temp) if rotrelax else 0.0
+    evib_eq = calc_evib(gas, temp) if vibrelax else [0.0]
     dedt = np.zeros(len(y))
 
     dedt[0] = nu * (erot_eq - y[0]) / gas.Zrot
@@ -81,16 +81,18 @@ def calc_temperatures(energies, gas):
 
     return temperatures
 
-def solve(gas, nrho, temp, trot, tvib, t):
+def solve(gas, nrho, temp, trot, tvib, t, **kwargs):
+    rotrelax = kwargs["rotrelax"] if "rotrelax" in kwargs else True
+    vibrelax = kwargs["vibrelax"] if "vibrelax" in kwargs else True
     ekin0 = calc_ekin(gas, temp)
-    erot0 = calc_erot(gas, trot)
-    evib0 = calc_evib(gas, tvib)
+    erot0 = calc_erot(gas, trot) if rotrelax else 0.0
+    evib0 = calc_evib(gas, tvib) if vibrelax else [0.0]
     etot = ekin0 + erot0 + sum(evib0)
     y0 = np.concatenate(([erot0], evib0))
     sol = [y0]
 
     for _ in range(len(t) - 1):
-        dedt = calc_dedt(sol[-1], t, gas, etot, nrho)
+        dedt = calc_dedt(sol[-1], t, gas, etot, nrho, rotrelax, vibrelax)
         res = sol[-1] + dedt*t[1]
         sol.append(res)
 
