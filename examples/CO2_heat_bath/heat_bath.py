@@ -20,4 +20,6 @@ sol = lt.solve(co2, nrho, temp, trot, tvib, t)
 plt.plot(sol.time, sol.temperatures)
 plt.show()
 
+lt.write_solution(sol, "solution", "csv")
+
 print("done")
