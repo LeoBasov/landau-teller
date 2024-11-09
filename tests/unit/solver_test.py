@@ -27,3 +27,10 @@ class TestSolver(unittest.TestCase):
         evibs2 = so.calc_evib(co2, temps)
 
         self.assertEqual(evibs1[0], evibs2[0])
+
+    def test_solve(self):
+        file_name = "data/CO2.json"
+        co2 = rd.read_species(file_name)
+        temp = 300
+        trot = 400
+        tvib = 500
