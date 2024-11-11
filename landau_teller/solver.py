@@ -25,13 +25,13 @@ def calc_evib(gas, temp):
     for i in range(len(evib)):
         if isinstance(temp, Number):
             frac = gas.vibmodes[i].theta/temp
-            evib[i] = gas.vibmodes[i].degen * 0.5 * kb * frac / (np.exp(frac) - 1.0) * temp
+            evib[i] = gas.vibmodes[i].degen * kb * frac / (np.exp(frac) - 1.0) * temp
         elif len(temp) == len(gas.vibmodes):
             frac = gas.vibmodes[i].theta/temp[i]
-            evib[i] = gas.vibmodes[i].degen * 0.5 * kb * frac / (np.exp(frac) - 1.0) * temp[i]
+            evib[i] = gas.vibmodes[i].degen * kb * frac / (np.exp(frac) - 1.0) * temp[i]
         elif len(temp) == 1:
             frac = gas.vibmodes[i].theta/temp[0]
-            evib[i] = gas.vibmodes[i].degen * 0.5 * kb * frac / (np.exp(frac) - 1.0) * temp[0]
+            evib[i] = gas.vibmodes[i].degen * kb * frac / (np.exp(frac) - 1.0) * temp[0]
         else:
             raise Exception("wrong format", temp)
 

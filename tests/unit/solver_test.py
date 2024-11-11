@@ -45,3 +45,14 @@ class TestSolver(unittest.TestCase):
         temp_eq = so.calc_temp_eq(co2, temp, trot, tvib, vibrelax=False)
 
         self.assertEqual(9000, temp_eq)
+
+    def test_calc_temp_eq(self):
+        file_name = "data/CH4.json"
+        CH4 = rd.read_species(file_name)
+        temp = 10000
+        trot = 7500
+        tvib = 5000
+
+        temp_eq = so.calc_temp_eq(CH4, temp, trot, tvib)
+
+        self.assertAlmostEqual(5958.0562, temp_eq[0], 1)
