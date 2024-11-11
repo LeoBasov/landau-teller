@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.0] - 2024-11-09
+
+### Added
+- Capcability to calculate equilibrium temperature for a given setup.
+
+### Fixed
+
+- Bug in calculation of evib.
+
 ## [0.4.1] - 2024-11-09
 
 ### Fixed
