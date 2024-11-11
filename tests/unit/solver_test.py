@@ -35,13 +35,13 @@ class TestSolver(unittest.TestCase):
         trot = 400
         tvib = 500
 
-    def test_calc_temp_eq(self):
+    def test_calc_temp_eq_rotrelax(self):
         file_name = "data/CO2.json"
         co2 = rd.read_species(file_name)
         temp = 10000
         trot = 7500
         tvib = 5000
 
-        temp_eq = so.calc_temp_eq(co2, temp, trot, tvib)
+        temp_eq = so.calc_temp_eq(co2, temp, trot, tvib, vibrelax=False)
 
-        self.assertEqual(6000, temp_eq)
+        self.assertEqual(9000, temp_eq)
