@@ -8,7 +8,7 @@ temp = 10000.0
 trot = 7500.0
 tvib = 5000.0
 nrho = 2e22
-t = np.linspace(0, 1e-5, 100)
+t = np.linspace(0, 0.5e-5, 100)
 
 N2.Zrot = 10
 N2.Zvib = 25
