@@ -108,18 +108,20 @@ def solve(gas, nrho, temp, trot, tvib, t, **kwargs):
 
     return solution
 
-def calc_etot(temp, gas, etot0):
+def calc_etot(temp, gas, etot0, rotrelax, vibrelax):
     ekin = calc_ekin(gas, temp)
-    erot = calc_erot(gas, temp)
-    evib = sum(calc_evib(gas, temp))
+    erot = calc_erot(gas, temp) if rotrelax else 0.0
+    evib = sum(calc_evib(gas, temp)) if vibrelax else 0.0
 
     return ekin + erot + evib - etot0
 
-def calc_temp_eq(gas, temp, trot, tvib):
+def calc_temp_eq(gas, temp, trot, tvib, **kwargs):
+    rotrelax = kwargs["rotrelax"] if "rotrelax" in kwargs else True
+    vibrelax = kwargs["vibrelax"] if "vibrelax" in kwargs else True
     ekin0 = calc_ekin(gas, temp)
-    erot0 = calc_erot(gas, trot)
-    evib0 = sum(calc_evib(gas, tvib))
+    erot0 = calc_erot(gas, trot) if rotrelax else 0.0
+    evib0 = sum(calc_evib(gas, tvib)) if vibrelax else 0.0
 
     etot0 = ekin0 + erot0 + evib0
 
-    return fsolve(calc_etot, temp, args=(gas, etot0))
+    return fsolve(calc_etot, temp, args=(gas, etot0, rotrelax, vibrelax))
