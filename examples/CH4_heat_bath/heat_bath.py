@@ -14,8 +14,10 @@ co2.Zrot = 10
 co2.Zvib = 50
 
 sol = lt.solve(co2, nrho, temp, trot, tvib, t)
+temp_eq = np.ones(sol.time.size) * lt.calc_temp_eq(co2, temp, trot, tvib)
 
 plt.plot(sol.time, sol.temperatures)
+plt.plot(sol.time, temp_eq, "--")
 plt.show()
 
 lt.write_solution(sol, "CH4", "csv")
