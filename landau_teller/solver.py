@@ -29,8 +29,11 @@ def calc_evib(gas, temp):
         elif len(temp) == len(gas.vibmodes):
             frac = gas.vibmodes[i].theta/temp[i]
             evib[i] = gas.vibmodes[i].degen * 0.5 * kb * frac / (np.exp(frac) - 1.0) * temp[i]
+        elif len(temp) == 1:
+            frac = gas.vibmodes[i].theta/temp[0]
+            evib[i] = gas.vibmodes[i].degen * 0.5 * kb * frac / (np.exp(frac) - 1.0) * temp[0]
         else:
-            raise Exception("wrong format")
+            raise Exception("wrong format", temp)
 
     return evib
 
@@ -104,3 +107,19 @@ def solve(gas, nrho, temp, trot, tvib, t, **kwargs):
     solution.time = t
 
     return solution
+
+def calc_etot(temp, gas, etot0):
+    ekin = calc_ekin(gas, temp)
+    erot = calc_erot(gas, temp)
+    evib = sum(calc_evib(gas, temp))
+
+    return ekin + erot + evib - etot0
+
+def calc_temp_eq(gas, temp, trot, tvib):
+    ekin0 = calc_ekin(gas, temp)
+    erot0 = calc_erot(gas, trot)
+    evib0 = sum(calc_evib(gas, tvib))
+
+    etot0 = ekin0 + erot0 + evib0
+
+    return fsolve(calc_etot, temp, args=(gas, etot0))
