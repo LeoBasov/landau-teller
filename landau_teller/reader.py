@@ -1,5 +1,29 @@
 import json
 from .gas import Gas, Vibmode
+import numpy as np
+
+def read_output(file_name):
+    names = []
+    data = {}
+
+    with open(file_name) as file:
+        for line in file:
+            line = line.replace("\n", "")
+            line = line.replace(" ", "")
+            splt = line.split(',')
+
+            if len(names) == 0:
+                for name in splt:
+                    names.append(name)
+                    data[name] = []
+            else:
+                for i in range(len(splt)):
+                    data[names[i]].append(float(splt[i]))
+
+    for key, value in data.items():
+        data[key] = np.array(value)
+
+    return data
 
 def read_species(file_name):
     gas = Gas()

@@ -18,6 +18,6 @@ sol = lt.solve(co2, nrho, temp, trot, tvib, t)
 plt.plot(sol.time, sol.temperatures)
 plt.show()
 
-lt.write_solution(sol, "CH4", "csv")
+lt.write_solution(sol, "examples/CH4_heat_bath/CH4", "csv")
 
 print("done")
