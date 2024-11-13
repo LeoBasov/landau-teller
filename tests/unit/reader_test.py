@@ -37,3 +37,21 @@ class TestReader(unittest.TestCase):
         self.assertEqual(20, co2.vibmodes[2].Z)
         self.assertEqual(959.0, co2.vibmodes[2].theta)
         self.assertEqual(2, co2.vibmodes[2].degen)
+
+    def test_read_output(self):
+        file_name_temp = "examples/CH4_heat_bath/CH4_temp.csv"
+        file_name_energy = "examples/CH4_heat_bath/CH4_energy.csv"
+
+        data_temp = rd.read_output(file_name_temp)
+        data_energy = rd.read_output(file_name_energy)
+
+        self.assertEqual(0, data_temp["t"][0])
+        self.assertEqual(1e-5, data_temp["t"][-1])
+
+        self.assertEqual(data_temp['t'].size, data_energy['t'].size)
+
+        for i in range(data_temp['t'].size):
+            self.assertEqual(data_energy["t"][i], data_temp["t"][i])
+
+        self.assertEqual(2.0709735e-19, data_energy["ekin"][0])
+        self.assertAlmostEqual(10000.0, data_temp["temp"][0], 5)
